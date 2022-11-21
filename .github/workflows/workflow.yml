@@ -38,7 +38,7 @@ jobs:
     
     # Echo some values
     - name: Showme
-      run: echo ${{ secrets.REGISTRY_NAME }}
+      run: env; echo ${{ secrets.REGISTRY_NAME }}
       
     # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
     - name: Build container image
