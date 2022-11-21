@@ -25,6 +25,8 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Set Parameters
+      run: set AKR_DIGITALOCEAN_ACCESS_TOKEN=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} ; set AKR_REGISTRY_NAME=registry.digitalocean.com/george-test-registry11 ; set AKR_CLUSTER_NAME=george-cluster1 ; echo '^^^^^^^^^^^^^^^^^^^^^^^^^^' ; env ; echo '=============================='
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
     - name: Checkout master
@@ -55,7 +57,7 @@ jobs:
       run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.REGISTRY_NAME }}/python-example:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
-      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.CLUSTER_NAME }}
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 $AKR_CLUSTER_NAME
     
     # If you haven't already integrated with your registry and only want workloads in a particular namespace to be able to pull 
     # from your registry, uncomment the next two commands.
